@@ -1,0 +1,6 @@
+[submodule "xenomai"]
+	path = xenomai
+	url = git@github.com:TempsReelInsa/xenomai.git
+[submodule "lib_destijl"]
+	path = lib_destijl
+	url = git@github.com:TempsReelInsa/lib_destijl.git
