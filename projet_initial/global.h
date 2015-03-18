@@ -43,6 +43,7 @@ extern int PRIORITY_TENVOYER;
 //----A NOUS ---
 
 extern int nbErreurConsecutive;
+extern int etatEnvoiArene;
 
 #endif	/* GLOBAL_H */
 
