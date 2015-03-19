@@ -15,11 +15,12 @@ extern RT_TASK tServeur;
 extern RT_TASK tconnect;
 extern RT_TASK tmove;
 extern RT_TASK tenvoyer;
+extern RT_TASK tPeriodicArene;
 
 /* @descripteurs des mutex */
 extern RT_MUTEX mutexEtat;
 extern RT_MUTEX mutexMove;
-
+extern RT_MUTEX mutexArene;
 /* @descripteurs des sempahore */
 extern RT_SEM semConnecterRobot;
 
@@ -32,6 +33,7 @@ extern int etatCommRobot;
 extern DServer *serveur;
 extern DRobot *robot;
 extern DMovement *move;
+extern DCamera* camera;
 
 /* @constantes */
 extern int MSG_QUEUE_SIZE;
@@ -39,10 +41,12 @@ extern int PRIORITY_TSERVEUR;
 extern int PRIORITY_TCONNECT;
 extern int PRIORITY_TMOVE;
 extern int PRIORITY_TENVOYER;
+extern int PRIORITY_TPERIODICARENE;
 
 //----A NOUS ---
 
 extern int nbErreurConsecutive;
+extern int etatArene;
 
 #endif	/* GLOBAL_H */
 
