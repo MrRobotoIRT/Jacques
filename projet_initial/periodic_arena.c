@@ -18,7 +18,9 @@ void areneEnvoyerMessage(void * arg) {
         if(status == ARENE_SEND){
             img = d_new_image();
             jpegImage = d_new_jpegimage();
-            camera->get_frame(camera, img);
+            rt_mutex_acquire(&mutexCamera, TM_INFINITE);
+    		camera->get_frame(camera, img);
+    		rt_mutex_release(&mutexCamera);
             jpegImage->compress(jpegImage, img);
             message = d_new_message();
             message->put_jpeg_image(message, jpegImage);

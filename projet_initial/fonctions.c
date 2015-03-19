@@ -57,6 +57,7 @@ void connecter(void * arg) {
 }
 
 void communiquer(void *arg) {
+    int err;
     DMessage *msg = d_new_message();
     int var1 = 1;
     int num_msg = 0;
@@ -84,6 +85,14 @@ void communiquer(void *arg) {
                         case ACTION_CONNECT_ROBOT:
                             rt_printf("tserver : Action connecter robot\n");
                             rt_sem_v(&semConnecterRobot);
+                            break;
+                        case ACTION_FIND_ARENA:
+                        case ACTION_ARENA_FAILED:
+                        case ACTION_ARENA_IS_FOUND:
+                            rt_mutex_acquire(&mutexDetectionArene, TM_INFINITE);
+                            etatAreneDetection = action->get_order(action);
+                            rt_mutex_release(&mutexDetectionArene);
+                            rt_task_resume(&tDetectionArene);
                             break;
                     }
                     break;

@@ -1,7 +1,7 @@
 CC=gcc
 LINK=g++
 CFLAGS=-I../xenomai/include  -I../lib_destijl/headers
-OBJ=fonctions.o global.o main.o periodic_arena.o
+OBJ=fonctions.o global.o main.o periodic_arena.o detection_arena.o
 OBJ_SRC=../lib_destijl/source/*.o
 LIB= -lopencv_core -lopencv_highgui -lopencv_imgproc -lxenomai -lnative -L../xenomai/lib
 
@@ -14,10 +14,11 @@ main: $(OBJ)
 periodic_arena.o: periodic_arena.c periodic_arena.h
 	$(CC) -g -Wall $(CFLAGS) -c periodic_arena.c -o periodic_arena.o
 
+detection_arena.o: detection_arena.c detection_arena.h
+	$(CC) -g -Wall $(CFLAGS) -c detection_arena.c -o detection_arena.o
 
 fonctions.o: fonctions.c dmessage.o fonctions.h 
 	$(CC) -g -Wall $(CFLAGS)  -c fonctions.c -o fonctions.o
-
 
 global.o: global.c global.h
 	$(CC) -g -Wall $(CFLAGS) -c global.c -o global.o
