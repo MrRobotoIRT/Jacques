@@ -25,5 +25,6 @@
 #include "../lib_destijl/headers/dincludes.h"
 #include "mconstantes.h"
 #include "periodic_arena.h"
+#include "detection_arena.h"
 #endif	/* INCLUDES_H */
 
