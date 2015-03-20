@@ -96,6 +96,7 @@ void initStruct(void) {
     robot = d_new_robot();
     move = d_new_movement();
     serveur = d_new_server();
+    battery = d_new_battery();
 }
 
 void startTasks() {
