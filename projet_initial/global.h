@@ -10,6 +10,8 @@
 
 #include "includes.h"
 
+
+#define MAX_RETRY_INDICE 3
 /* @descripteurs des tâches */
 extern RT_TASK tServeur;
 extern RT_TASK tconnect;
@@ -39,6 +41,7 @@ extern DRobot *robot;
 extern DMovement *move;
 extern DCamera* camera;
 extern DArena* arene;
+extern DBattery* battery;
 
 /* @constantes */
 extern int MSG_QUEUE_SIZE;

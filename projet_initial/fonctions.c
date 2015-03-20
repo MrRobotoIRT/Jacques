@@ -157,7 +157,7 @@ void deplacer(void *arg) {
 
             if (status != STATUS_OK) {
                 nbErreurConsecutive++;
-                if(nbErreurConsecutive > 5) {
+                if(nbErreurConsecutive > MAX_RETRY_INDICE) {
                     rt_mutex_acquire(&mutexEtat, TM_INFINITE);
                     etatCommRobot = status;
                     rt_mutex_release(&mutexEtat);

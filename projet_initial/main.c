@@ -121,6 +121,7 @@ void initStruct(void) {
 
     camera = d_new_camera();
     camera->open(camera);
+    battery = d_new_battery();
 }
 
 void startTasks() {
