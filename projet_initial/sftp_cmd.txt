@@ -1,2 +1,0 @@
-cd tp_trs
-put robot
