@@ -11,17 +11,13 @@ rt_task_set_periodic(NULL,TM_NOW,250000000);
 		if(etatCommRobot == STATUS_OK) {
 			int battery_level = retrieve_battery();
 			sendBatteryInfo(battery_level);
-/*			switch(battery_level) {
+			switch(battery_level) {
 				case BATTERY_LEVEL_LOW:
-					//stop stuff
+					rt_mutex_acquire(&mutexMove, TM_INFINITE);
+					robot->stop(&robot);
+					rt_mutex_release(&mutexMove);
 					break;
-				case BATTERY_LEVEL_UNKNOWN:
-			        	//nbErreurConsecutive++;
-			        	//checkErrorLevel(BATTERY_LEVEL_UNKNOWN);
-				default:
-					//nbErreurConsecutive=0;
-					//ecrire niveau de batterie 
-			}*/
+			}
 		}
 	}
 
