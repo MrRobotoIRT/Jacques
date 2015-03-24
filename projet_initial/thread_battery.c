@@ -10,19 +10,18 @@ rt_task_set_periodic(NULL,TM_NOW,250000000);
 		rt_task_wait_period(NULL);
 		if(etatCommRobot == STATUS_OK) {
 			int battery_level = retrieve_battery();
-			switch(battery_level) {
+			sendBatteryInfo(battery_level);
+/*			switch(battery_level) {
 				case BATTERY_LEVEL_LOW:
 					//stop stuff
-				sendBatteryInfo(battery_level);
 					break;
 				case BATTERY_LEVEL_UNKNOWN:
 			        	//nbErreurConsecutive++;
 			        	//checkErrorLevel(BATTERY_LEVEL_UNKNOWN);
-				break;
 				default:
-					nbErreurConsecutive=0;
+					//nbErreurConsecutive=0;
 					//ecrire niveau de batterie 
-			}
+			}*/
 		}
 	}
 
@@ -32,7 +31,8 @@ void sendBatteryInfo(int level) {
 		DMessage *message;
 	    message = d_new_message();
 	    rt_mutex_acquire(&mutexBattery, TM_INFINITE);
-	    battery->set_level(battery, level);
+	    if(level != BATTERY_LEVEL_UNKNOWN)
+		    battery->set_level(battery, level);
 	    message->put_battery_level(message,battery);
 	    rt_mutex_release(&mutexBattery);
 
@@ -48,7 +48,8 @@ int retrieve_battery() {
 	rt_printf("Acquiring Battery level");
 	rt_mutex_acquire(&mutexMove, TM_INFINITE);
 	rt_printf("...");
-	int battery_level = d_battery_get_level(battery);
+	int battery_level;
+	robot->get_vbat(robot,&battery_level);
 	rt_printf(" %d \n", battery_level);
 	rt_mutex_release(&mutexMove);
 	return battery_level;
