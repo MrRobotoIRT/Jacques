@@ -74,7 +74,10 @@ void initStruct(void) {
         rt_printf("Error mutex create: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-
+    if (err = rt_mutex_create(&mutexBattery, NULL)) {
+        rt_printf("Error mutex create: %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
     /* Creation du semaphore */
     if (err = rt_sem_create(&semConnecterRobot, NULL, 0, S_FIFO)) {
         rt_printf("Error semaphore create: %s\n", strerror(-err));
@@ -106,7 +109,10 @@ void initStruct(void) {
         rt_printf("Error task create : %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-
+    if (err = rt_task_create(&tBattery, NULL, 0, PRIORITY_TBATTERY, 0)){
+        rt_printf("Error task create : %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
     /* Creation des files de messages */
     if (err = rt_queue_create(&queueMsgGUI, "toto", MSG_QUEUE_SIZE*sizeof(DMessage), MSG_QUEUE_SIZE, Q_FIFO)){
         rt_printf("Error msg queue create: %s\n", strerror(-err));
@@ -121,6 +127,7 @@ void initStruct(void) {
 
     camera = d_new_camera();
     camera->open(camera);
+    battery = d_new_battery();
 }
 
 void startTasks() {
@@ -148,6 +155,11 @@ void startTasks() {
     if (err = rt_task_start(&tDetectionArene, &detectionArene, NULL)) {
         rt_printf("Error task start: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
+    }
+    if(err = rt_task_start(&tBattery, &thread_battery,NULL)) {
+        rt_printf("Error task start: %s\n",strerror(-err));
+	exit(EXIT_FAILURE);
+
     }
 
 }

@@ -26,5 +26,7 @@
 #include "mconstantes.h"
 #include "periodic_arena.h"
 #include "detection_arena.h"
+#include "thread_battery.h"
+
 #endif	/* INCLUDES_H */
 
