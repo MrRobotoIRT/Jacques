@@ -41,12 +41,13 @@ int main(int argc, char**argv) {
      * before any calls to rt_printf(). If you forget this part, you won't see
      * anything printed.
      */
-    rt_print_auto_init(1);
-    initStruct();
-    startTasks();
-    pause();
-    deleteTasks();
-
+     while(1){
+        rt_print_auto_init(1);
+        initStruct();
+        startTasks();
+        pause();
+        deleteTasks();   
+     }
     return 0;
 }
 
@@ -61,7 +62,22 @@ void initStruct(void) {
         rt_printf("Error mutex create: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-
+    if (err = rt_mutex_create(&mutexArene, NULL)) {
+        rt_printf("Error mutex create: %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
+    if (err = rt_mutex_create(&mutexDetectionArene, NULL)) {
+        rt_printf("Error mutex create: %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
+    if (err = rt_mutex_create(&mutexCamera, NULL)) {
+        rt_printf("Error mutex create: %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
+    if (err = rt_mutex_create(&mutexBattery, NULL)) {
+        rt_printf("Error mutex create: %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
     /* Creation du semaphore */
     if (err = rt_sem_create(&semConnecterRobot, NULL, 0, S_FIFO)) {
         rt_printf("Error semaphore create: %s\n", strerror(-err));
@@ -85,7 +101,18 @@ void initStruct(void) {
         rt_printf("Error task create: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-
+    if (err = rt_task_create(&tPeriodicArene, NULL, 0, PRIORITY_TPERIODICARENE, 0)) {
+        rt_printf("Error task create : %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
+    if (err = rt_task_create(&tDetectionArene, NULL, 0, PRIORITY_TDETECTIONARENE, 0)){
+        rt_printf("Error task create : %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
+    if (err = rt_task_create(&tBattery, NULL, 0, PRIORITY_TBATTERY, 0)){
+        rt_printf("Error task create : %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
     /* Creation des files de messages */
     if (err = rt_queue_create(&queueMsgGUI, "toto", MSG_QUEUE_SIZE*sizeof(DMessage), MSG_QUEUE_SIZE, Q_FIFO)){
         rt_printf("Error msg queue create: %s\n", strerror(-err));
@@ -96,6 +123,9 @@ void initStruct(void) {
     robot = d_new_robot();
     move = d_new_movement();
     serveur = d_new_server();
+    arene = NULL;
+    camera = d_new_camera();
+    camera->open(camera);
     battery = d_new_battery();
 }
 
@@ -117,6 +147,19 @@ void startTasks() {
         rt_printf("Error task start: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
+    if (err = rt_task_start(&tPeriodicArene, &areneEnvoyerMessage, NULL)) {
+        rt_printf("Error task start: %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
+    if (err = rt_task_start(&tDetectionArene, &detectionArene, NULL)) {
+        rt_printf("Error task start: %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
+    if(err = rt_task_start(&tBattery, &thread_battery,NULL)) {
+        rt_printf("Error task start: %s\n",strerror(-err));
+	exit(EXIT_FAILURE);
+
+    }
 
 }
 
@@ -124,4 +167,7 @@ void deleteTasks() {
     rt_task_delete(&tServeur);
     rt_task_delete(&tconnect);
     rt_task_delete(&tmove);
+    rt_task_delete(&tPeriodicArene);
+    rt_task_delete(&tDetectionArene);
+
 }

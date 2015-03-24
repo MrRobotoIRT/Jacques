@@ -10,6 +10,9 @@ void envoyer(void * arg) {
         rt_printf("tenvoyer : Attente d'un message\n");
         if ((err = rt_queue_read(&queueMsgGUI, &msg, sizeof (DMessage), TM_INFINITE)) >= 0) {
             rt_printf("tenvoyer : envoi d'un message au moniteur\n");
+            if(msg->get_type(msg) == MESSAGE_TYPE_IMAGE){
+                rt_printf("ENVOI D'UNE IMAGE AU MONITEUR\n");
+            }
             serveur->send(serveur, msg);
             msg->free(msg);
         } else {
@@ -54,6 +57,7 @@ void connecter(void * arg) {
 }
 
 void communiquer(void *arg) {
+    int err;
     DMessage *msg = d_new_message();
     int var1 = 1;
     int num_msg = 0;
@@ -82,6 +86,14 @@ void communiquer(void *arg) {
                             rt_printf("tserver : Action connecter robot\n");
                             rt_sem_v(&semConnecterRobot);
                             break;
+                        case ACTION_FIND_ARENA:
+                        case ACTION_ARENA_FAILED:
+                        case ACTION_ARENA_IS_FOUND:
+                            rt_mutex_acquire(&mutexDetectionArene, TM_INFINITE);
+                            etatAreneDetection = action->get_order(action);
+                            rt_mutex_release(&mutexDetectionArene);
+                            rt_task_resume(&tDetectionArene);
+                            break;
                     }
                     break;
                 case MESSAGE_TYPE_MOVEMENT:
@@ -97,6 +109,7 @@ void communiquer(void *arg) {
     }
 }
 
+
 void deplacer(void *arg) {
     int status = 1;
     int gauche;
@@ -105,7 +118,6 @@ void deplacer(void *arg) {
 
     rt_printf("tmove : Debut de l'éxecution de periodique à 1s\n");
     rt_task_set_periodic(NULL, TM_NOW, 1000000000);
-
     while (1) {
         /* Attente de l'activation périodique */
         rt_task_wait_period(NULL);
