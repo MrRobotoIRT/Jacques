@@ -173,12 +173,8 @@ void deplacer(void *arg) {
 
             if (status != STATUS_OK) {
                 nbErreurConsecutive++;
-<<<<<<< HEAD
                 if(nbErreurConsecutive > MAX_RETRY_INDICE) {
-=======
-                if(nbErreurConsecutive > 5) {
 
->>>>>>> compute position done
                     rt_mutex_acquire(&mutexEtat, TM_INFINITE);
                     
                     etatCommRobot = status;

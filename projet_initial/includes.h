@@ -26,11 +26,8 @@
 #include "mconstantes.h"
 #include "periodic_arena.h"
 #include "detection_arena.h"
-<<<<<<< HEAD
 #include "thread_battery.h"
 
-=======
 #include "compute_position.h"
->>>>>>> compute position done
 #endif	/* INCLUDES_H */
 

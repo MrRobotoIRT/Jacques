@@ -41,15 +41,7 @@ int main(int argc, char**argv) {
      * before any calls to rt_printf(). If you forget this part, you won't see
      * anything printed.
      */
-<<<<<<< HEAD
-     while(1){
-        rt_print_auto_init(1);
-        initStruct();
-        startTasks();
-        pause();
-        deleteTasks();   
-     }
-=======
+
     while(1){
     rt_print_auto_init(1);
     initStruct();
@@ -58,8 +50,6 @@ int main(int argc, char**argv) {
     deleteTasks();
     }
 
-
->>>>>>> compute position done
     return 0;
 }
 
@@ -125,18 +115,14 @@ void initStruct(void) {
         rt_printf("Error task create : %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-<<<<<<< HEAD
     if (err = rt_task_create(&tBattery, NULL, 0, PRIORITY_TBATTERY, 0)){
         rt_printf("Error task create : %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-=======
     if (err = rt_task_create(&tComputePosition, NULL, 0, PRIORITY_TCOMPUTEPOSITION, 0)){
         rt_printf("Error task create : %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-
->>>>>>> compute position done
     /* Creation des files de messages */
     if (err = rt_queue_create(&queueMsgGUI, "toto", MSG_QUEUE_SIZE*sizeof(DMessage), MSG_QUEUE_SIZE, Q_FIFO)){
         rt_printf("Error msg queue create: %s\n", strerror(-err));
@@ -180,19 +166,16 @@ void startTasks() {
         rt_printf("Error task start: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-<<<<<<< HEAD
     if(err = rt_task_start(&tBattery, &thread_battery,NULL)) {
         rt_printf("Error task start: %s\n",strerror(-err));
 	exit(EXIT_FAILURE);
 
     }
 
-=======
     if (err = rt_task_start(&tComputePosition, &trouverPosition, NULL)) {
         rt_printf("Error task start: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
->>>>>>> compute position done
 }
 
 void deleteTasks() {
