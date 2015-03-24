@@ -41,12 +41,13 @@ int main(int argc, char**argv) {
      * before any calls to rt_printf(). If you forget this part, you won't see
      * anything printed.
      */
-    rt_print_auto_init(1);
-    initStruct();
-    startTasks();
-    pause();
-    deleteTasks();
-
+     while(1){
+        rt_print_auto_init(1);
+        initStruct();
+        startTasks();
+        pause();
+        deleteTasks();   
+     }
     return 0;
 }
 
