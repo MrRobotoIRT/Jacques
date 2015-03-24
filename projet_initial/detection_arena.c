@@ -31,7 +31,6 @@ void findArene(){
     rt_mutex_release(&mutexArene);
     img = d_new_image();
     rt_mutex_acquire(&mutexCamera, TM_INFINITE);
-    printf("%d", camera->mCapture);
     camera->get_frame(camera, img);
     rt_mutex_release(&mutexCamera);
     tmpArene=img->compute_arena_position(img);

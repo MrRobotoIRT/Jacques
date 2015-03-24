@@ -57,7 +57,6 @@ void connecter(void * arg) {
 }
 
 void communiquer(void *arg) {
-    int err;
     DMessage *msg = d_new_message();
     int var1 = 1;
     int num_msg = 0;
@@ -93,6 +92,23 @@ void communiquer(void *arg) {
                             etatAreneDetection = action->get_order(action);
                             rt_mutex_release(&mutexDetectionArene);
                             rt_task_resume(&tDetectionArene);
+                            break;
+                        case ACTION_COMPUTE_CONTINUOUSLY_POSITION:
+                            rt_mutex_acquire(&mutexArene, TM_INFINITE);
+                            etatArene = ARENE_DONT_SEND;
+                            rt_mutex_release(&mutexArene);
+                            rt_mutex_acquire(&mutexDetect, TM_INFINITE);
+                            hasToDetect = TRUE;
+                            rt_mutex_release(&mutexDetect);
+                            break;
+
+                        case ACTION_STOP_COMPUTE_POSITION:
+                            rt_mutex_acquire(&mutexArene, TM_INFINITE);
+                            etatArene = ARENE_SEND;
+                            rt_mutex_release(&mutexArene);
+                            rt_mutex_acquire(&mutexDetect, TM_INFINITE);
+                            hasToDetect = FALSE;
+                            rt_mutex_release(&mutexDetect);
                             break;
                     }
                     break;
@@ -157,8 +173,14 @@ void deplacer(void *arg) {
 
             if (status != STATUS_OK) {
                 nbErreurConsecutive++;
+<<<<<<< HEAD
                 if(nbErreurConsecutive > MAX_RETRY_INDICE) {
+=======
+                if(nbErreurConsecutive > 5) {
+
+>>>>>>> compute position done
                     rt_mutex_acquire(&mutexEtat, TM_INFINITE);
+                    
                     etatCommRobot = status;
                     rt_mutex_release(&mutexEtat);
 

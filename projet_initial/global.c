@@ -12,12 +12,14 @@ RT_TASK tconnect;
 RT_TASK tmove;
 RT_TASK tenvoyer;
 RT_TASK tPeriodicArene;
+RT_TASK tComputePosition;
 RT_TASK tDetectionArene;
 RT_TASK tBattery;
 RT_MUTEX mutexArene;
 RT_MUTEX mutexEtat;
 RT_MUTEX mutexMove;
 RT_MUTEX mutexDetectionArene;
+RT_MUTEX mutexDetect;
 RT_MUTEX mutexCamera;
 RT_MUTEX mutexBattery;
 
@@ -29,6 +31,8 @@ int etatCommMoniteur = 1;
 int etatCommRobot = 1;
 int etatArene = ARENE_SEND;
 int etatAreneDetection;
+int hasToDetect = FALSE;
+
 
 DRobot *robot;
 DMovement *move;
@@ -48,3 +52,7 @@ int PRIORITY_TBATTERY = 10;
 // RANDOM PRIORITY
 int PRIORITY_TPERIODICARENE = 10;
 int PRIORITY_TDETECTIONARENE = 20;
+<<<<<<< HEAD
+=======
+int PRIORITY_TCOMPUTEPOSITION = 20;
+>>>>>>> compute position done

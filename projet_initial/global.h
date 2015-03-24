@@ -19,14 +19,23 @@ extern RT_TASK tmove;
 extern RT_TASK tenvoyer;
 extern RT_TASK tPeriodicArene;
 extern RT_TASK tDetectionArene;
+<<<<<<< HEAD
 extern RT_TASK tBattery;
+=======
+extern RT_TASK tComputePosition;
+
+>>>>>>> compute position done
 /* @descripteurs des mutex */
 extern RT_MUTEX mutexEtat;
 extern RT_MUTEX mutexMove;
 extern RT_MUTEX mutexArene;
 extern RT_MUTEX mutexDetectionArene;
 extern RT_MUTEX mutexCamera;
+<<<<<<< HEAD
 extern RT_MUTEX mutexBattery;
+=======
+extern RT_MUTEX mutexDetect;
+>>>>>>> compute position done
 
 /* @descripteurs des sempahore */
 extern RT_SEM semConnecterRobot;
@@ -52,12 +61,18 @@ extern int PRIORITY_TMOVE;
 extern int PRIORITY_TENVOYER;
 extern int PRIORITY_TPERIODICARENE;
 extern int PRIORITY_TDETECTIONARENE;
+<<<<<<< HEAD
 extern int PRIORITY_TBATTERY;
+=======
+extern int PRIORITY_TCOMPUTEPOSITION;
+
+>>>>>>> compute position done
 //----A NOUS ---
 
 extern int nbErreurConsecutive;
 extern int etatArene;
 extern int etatAreneDetection;
+extern int hasToDetect;
 
 #endif	/* GLOBAL_H */
 
