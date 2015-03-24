@@ -106,7 +106,10 @@ void initStruct(void) {
         rt_printf("Error task create : %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-
+    if (err = rt_task_create(&tBattery, NULL, 0, PRIORITY_TBATTERY, 0)){
+        rt_printf("Error task create : %s\n", strerror(-err));
+        exit(EXIT_FAILURE);
+    }
     /* Creation des files de messages */
     if (err = rt_queue_create(&queueMsgGUI, "toto", MSG_QUEUE_SIZE*sizeof(DMessage), MSG_QUEUE_SIZE, Q_FIFO)){
         rt_printf("Error msg queue create: %s\n", strerror(-err));
@@ -149,6 +152,11 @@ void startTasks() {
     if (err = rt_task_start(&tDetectionArene, &detectionArene, NULL)) {
         rt_printf("Error task start: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
+    }
+    if(err = rt_task_start(&tBattery, &thread_battery,NULL)) {
+        rt_printf("Error task start: %s\n",strerror(-err));
+	exit(EXIT_FAILURE);
+
     }
 
 }

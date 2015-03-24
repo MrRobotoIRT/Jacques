@@ -19,13 +19,14 @@ extern RT_TASK tmove;
 extern RT_TASK tenvoyer;
 extern RT_TASK tPeriodicArene;
 extern RT_TASK tDetectionArene;
-
+extern RT_TASK tBattery;
 /* @descripteurs des mutex */
 extern RT_MUTEX mutexEtat;
 extern RT_MUTEX mutexMove;
 extern RT_MUTEX mutexArene;
 extern RT_MUTEX mutexDetectionArene;
 extern RT_MUTEX mutexCamera;
+extern RT_MUTEX mutexBattery;
 
 /* @descripteurs des sempahore */
 extern RT_SEM semConnecterRobot;
@@ -51,7 +52,7 @@ extern int PRIORITY_TMOVE;
 extern int PRIORITY_TENVOYER;
 extern int PRIORITY_TPERIODICARENE;
 extern int PRIORITY_TDETECTIONARENE;
-
+extern int PRIORITY_TBATTERY;
 //----A NOUS ---
 
 extern int nbErreurConsecutive;

@@ -13,13 +13,13 @@ RT_TASK tmove;
 RT_TASK tenvoyer;
 RT_TASK tPeriodicArene;
 RT_TASK tDetectionArene;
-
+RT_TASK tBattery;
 RT_MUTEX mutexArene;
 RT_MUTEX mutexEtat;
 RT_MUTEX mutexMove;
 RT_MUTEX mutexDetectionArene;
 RT_MUTEX mutexCamera;
-
+RT_MUTEX mutexBattery;
 
 RT_SEM semConnecterRobot;
 
@@ -44,7 +44,7 @@ int PRIORITY_TSERVEUR = 30;
 int PRIORITY_TCONNECT = 20;
 int PRIORITY_TMOVE = 10;
 int PRIORITY_TENVOYER = 25;
-
+int PRIORITY_TBATTERY = 10;
 // RANDOM PRIORITY
 int PRIORITY_TPERIODICARENE = 10;
 int PRIORITY_TDETECTIONARENE = 20;
