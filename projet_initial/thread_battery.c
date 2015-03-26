@@ -1,9 +1,7 @@
 #include "thread_battery.h"
 
-int retrieve_battery();
-void checkErrorLevel(int status);
-void sendBatteryInfo(int level);
-void thread_battery(void * args) {
+
+void checkBattery(void * args) {
 	rt_printf("Starting thread battery\n");
 rt_task_set_periodic(NULL,TM_NOW,250000000);
 	while(1) {

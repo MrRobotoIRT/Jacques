@@ -5,8 +5,12 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-	void thread_battery(void* args);
+	void checkBattery(void* args);
+	int retrieve_battery();
+	void checkErrorLevel(int status);
+	void sendBatteryInfo(int level);
 #ifdef __cplusplus
 }
 #endif
 #endif
+

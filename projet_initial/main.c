@@ -166,7 +166,7 @@ void startTasks() {
         rt_printf("Error task start: %s\n", strerror(-err));
         exit(EXIT_FAILURE);
     }
-    if(err = rt_task_start(&tBattery, &thread_battery,NULL)) {
+    if(err = rt_task_start(&tBattery, &checkBattery,NULL)) {
         rt_printf("Error task start: %s\n",strerror(-err));
 	exit(EXIT_FAILURE);
 
@@ -185,5 +185,5 @@ void deleteTasks() {
     rt_task_delete(&tPeriodicArene);
     rt_task_delete(&tDetectionArene);
     rt_task_delete(&tComputePosition);
-
+    rt_task_delete(&tBattery);
 }

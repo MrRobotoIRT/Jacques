@@ -27,7 +27,6 @@
 #include "periodic_arena.h"
 #include "detection_arena.h"
 #include "thread_battery.h"
-
 #include "compute_position.h"
 #endif	/* INCLUDES_H */
 

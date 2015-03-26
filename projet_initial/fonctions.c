@@ -58,7 +58,7 @@ void connecter(void * arg) {
 
 void communiquer(void *arg) {
     DMessage *msg = d_new_message();
-    int var1 = 1;
+    int var1 = 1, var2;
     int num_msg = 0;
 
     rt_printf("tserver : Début de l'exécution de serveur\n");
@@ -88,10 +88,15 @@ void communiquer(void *arg) {
                         case ACTION_FIND_ARENA:
                         case ACTION_ARENA_FAILED:
                         case ACTION_ARENA_IS_FOUND:
-                            rt_mutex_acquire(&mutexDetectionArene, TM_INFINITE);
-                            etatAreneDetection = action->get_order(action);
-                            rt_mutex_release(&mutexDetectionArene);
-                            rt_task_resume(&tDetectionArene);
+                            rt_mutex_acquire(&mutexDetect, TM_INFINITE);
+                            var2 = hasToDetect;
+                            rt_mutex_release(&mutexDetect);
+                            if(hasToDetect == FALSE){
+                                rt_mutex_acquire(&mutexDetectionArene, TM_INFINITE);
+                                etatAreneDetection = action->get_order(action);
+                                rt_mutex_release(&mutexDetectionArene);
+                                rt_task_resume(&tDetectionArene);
+                            }
                             break;
                         case ACTION_COMPUTE_CONTINUOUSLY_POSITION:
                             rt_mutex_acquire(&mutexArene, TM_INFINITE);

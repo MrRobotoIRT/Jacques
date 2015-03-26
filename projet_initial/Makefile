@@ -1,8 +1,7 @@
 CC=gcc
 LINK=g++
 CFLAGS=-I../xenomai/include  -I../lib_destijl/headers
-OBJ=fonctions.o global.o main.o periodic_arena.o detection_arena.o thread_battery.o
-OBJ=fonctions.o global.o main.o periodic_arena.o detection_arena.o compute_position.o
+OBJ=fonctions.o global.o main.o periodic_arena.o detection_arena.o thread_battery.o compute_position.o
 OBJ_SRC=../lib_destijl/source/*.o
 LIB= -lopencv_core -lopencv_highgui -lopencv_imgproc -lxenomai -lnative -L../xenomai/lib
 
